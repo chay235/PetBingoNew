@@ -6,96 +6,93 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class BingoBoard : MonoBehaviour, IPointerClickHandler
 {
     Problem problem;
-
-    Dividend dividend;
-    Divisor divisor;
-    Quotient quotient;
-
-    GameOver gameover;
+    Calculation calculation;
     
-    string mytmptext;
-    public static int i;
-    public static int count = 25;
-
-    public static int currentquotient;
-
-    public void Awake()
-    {
-      
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-
-        if (mytmptext == Convert.ToString(currentquotient))
-        {
-            Debug.Log(true);
-            GetComponent<TMP_Text>().color = Color.green;
-            problem.dividendlist.RemoveAt(i);
-            problem.answerslist.RemoveAt(i);
-
-        }
-        else
-        {
-            Debug.Log(false);
-            string temp = GetComponent<TMP_Text>().text;
-            int inttemp = Convert.ToInt32(temp);
-            Destroy(GetComponent<TMP_Text>());
-            
-            int j = problem.answerslist.IndexOf(inttemp);
-            problem.dividendlist.RemoveAt(j);
-            problem.answerslist.RemoveAt(j);
-        }
-
-        i = UnityEngine.Random.Range(0, problem.dividendlist.Count);
-
-        if(problem.dividendlist.Count > 0)
-        {
-            dividend.GetComponent<TMP_Text>().text = problem.dividendlist[i].ToString();
-            divisor.GetComponent<TMP_Text>().text = problem.divisor.ToString();
-            currentquotient = problem.dividendlist[i] / problem.divisor;
-            quotient.GetComponent<TMP_Text>().text = currentquotient.ToString();
-        }
-        else
-        {
-            Debug.Log("Game Over!");
-            gameover.GetComponent<TMP_Text>().enabled = true;
-            
-        }
-    }
-
-    private void OnEnable()
-    {
-        problem = GameObject.Find("Problem").GetComponent<Problem>();
-        dividend = GameObject.Find("dividend").GetComponent<Dividend>();
-        divisor = GameObject.Find("divisor").GetComponent<Divisor>();
-        quotient = GameObject.Find("quotient").GetComponent<Quotient>();
-        gameover = GameObject.Find("GameOver").GetComponent<GameOver>();
-    }
-
+    private string mytmptext;
+    private int currentquotient;
+    private string index;
+    private int inttemp;
 
     // Start is called before the first frame update
     void Start()
     {
+        problem = GameObject.Find("Problem").GetComponent<Problem>();
+        calculation = GameObject.Find("CalculationSingleton").GetComponent<Calculation>();
         mytmptext = GetComponent<TMP_Text>().text.ToString();
 
-        i = UnityEngine.Random.Range(0, problem.dividendlist.Count);
-
-        dividend.GetComponent<TMP_Text>().text = problem.dividendlist[i].ToString();
-        divisor.GetComponent<TMP_Text>().text = problem.divisor.ToString();
-        currentquotient = problem.dividendlist[i] / problem.divisor;
-        quotient.GetComponent<TMP_Text>().text = currentquotient.ToString();
-
-        gameover.GetComponent<TMP_Text>().enabled = false;
+        index = this.name;
+        inttemp = Convert.ToInt32(index);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void OnPointerClick(PointerEventData eventData)
     {
-        
+        currentquotient = calculation.currentquotient;
+
+        if (mytmptext == Convert.ToString(currentquotient))
+        {
+            Debug.Log(true);
+            Debug.Log(index);
+            GetComponent<TMP_Text>().color = Color.green;
+            //problem.dividendlist.RemoveAt(calculation.i);
+            //problem.answerslist.RemoveAt(calculation.i);
+
+            //problem.dividendlist[calculation.i] = 00;
+            //problem.answerslist[calculation.i] = 00;
+
+            problem.dividendlist[inttemp] = 00;
+            problem.answerslist[inttemp] = 00;
+
+            displayToLog();
+            calculation.updateProblem();
+        }
+        else
+        {
+            Debug.Log(false);
+            Debug.Log(index);
+            //int inttemp = Convert.ToInt32(mytmptext);
+
+            //int j = problem.answerslist.IndexOf(inttemp);
+
+            //problem.dividendlist.RemoveAt(j);
+            //problem.answerslist.RemoveAt(j);
+
+            
+            //problem.dividendlist.RemoveAt(inttemp);
+            //problem.answerslist.RemoveAt(inttemp);
+
+            problem.dividendlist[inttemp] = 00;
+            problem.answerslist[inttemp] = 00;
+
+            displayToLog();
+            calculation.updateProblem();
+
+            Destroy(GetComponent<TMP_Text>());
+        }
+
+    }
+
+    public void displayToLog()
+    {
+        string dstr = " ";
+        foreach (int x in problem.dividendlist)
+        {
+            dstr += x + " ";
+        }
+
+        Debug.Log(dstr + "count: " + problem.dividendlist.Count);
+
+        string astr = " ";
+        foreach (int y in problem.answerslist)
+        {
+            astr += y + " ";
+        }
+
+        Debug.Log(astr + "count: " + problem.answerslist.Count);
     }
 }

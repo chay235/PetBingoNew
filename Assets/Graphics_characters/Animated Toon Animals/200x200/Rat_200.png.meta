@@ -690,7 +690,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Rat_200_1: 21300002
+      Rat_200_2: 21300004
       Rat_200_8: 21300016
       Rat_200_5: 21300010
       Rat_200_3: 21300006
@@ -714,7 +714,7 @@ TextureImporter:
       Rat_200_22: 21300044
       Rat_200_0: 21300000
       Rat_200_10: 21300020
-      Rat_200_2: 21300004
+      Rat_200_1: 21300002
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
