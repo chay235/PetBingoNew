@@ -17,6 +17,8 @@ public class BingoBoard : MonoBehaviour, IPointerClickHandler
     private int currentquotient;
     private string index;
     private int inttemp;
+    private Button _button;
+    private Sprite wmouse;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,14 @@ public class BingoBoard : MonoBehaviour, IPointerClickHandler
         problem = GameObject.Find("Problem").GetComponent<Problem>();
         calculation = GameObject.Find("CalculationSingleton").GetComponent<Calculation>();
         mytmptext = GetComponent<TMP_Text>().text.ToString();
+        //audiosource = GameObject.Find("CorrectAnswer").GetComponent<AudioSource>();
+        //   if (audiosource.IsPlaying)
+        //    audiosource.Pause();
+        GameObject.Find("CorrectAnswer").GetComponent<AudioSource>().Stop();
+        Sprite wmouse = Resources.Load<Sprite>("mouse_White");
+        Sprite greenbox = Resources.Load<Sprite>("btn_+_hov");
+       
+
 
         index = this.name;
         inttemp = Convert.ToInt32(index);
@@ -33,12 +43,16 @@ public class BingoBoard : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         currentquotient = calculation.currentquotient;
+        
 
         if (mytmptext == Convert.ToString(currentquotient))
         {
             Debug.Log(true);
             Debug.Log(index);
             GetComponent<TMP_Text>().color = Color.green;
+            GameObject.Find("CorrectAnswer").GetComponent<AudioSource>().Play();
+            //GetComponent<Image>().sprite = wmouse;
+            Debug.Log(wmouse);
             //problem.dividendlist.RemoveAt(calculation.i);
             //problem.answerslist.RemoveAt(calculation.i);
 
