@@ -14,15 +14,10 @@ public class levelBtnScript : MonoBehaviour
         levelPanel.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     public void showLevelPanel()
     {
         levelPanel.SetActive(true);
-
     }
 
     public void easyLevel()
