@@ -8,32 +8,30 @@ using UnityEngine.UIElements;
 
 public class FillBingoBoard : MonoBehaviour
 {
-    Problem problem;
-
     TMP_Text[] myboard;
 
-    private void Awake()
-    {
-        problem = GameObject.Find("Problem").GetComponent<Problem>();
-    }
 
     private void OnEnable()
     {
-        //problem = GameObject.Find("Problem").GetComponent<Problem>();
         myboard = GetComponentsInChildren<TMP_Text>();
-        for (int i = 0; i < 25; i++)
+
+        if (Problem.Instance != null)
         {
-            myboard[i].text = problem.answerslist[i].ToString();
+            fillBoard();
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        /*myboard = GetComponentsInChildren<TMP_Text>();
+
+    }
+
+    public void fillBoard()
+    {
         for (int i = 0; i < 25; i++)
         {
-            myboard[i].text = problem.answerslist[i].ToString();
-        }*/
+            myboard[i].text = Problem.Instance.answerslist[i].ToString();
+        }
     }
 }
